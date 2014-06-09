@@ -29,7 +29,7 @@ func (self *Fiber) Segment(src image.Image, high float64, low uint8) image.Image
 		for x := 0; x < width; x++ {
 			r, g, _, _ := m.At(x, y).RGBA()
 			if (uint8(r) <= low) || (float64(r)/float64(g) <= high) {
-					m.Set(x, y, color.NRGBA {0, 0, 0, 255})
+				m.Set(x, y, color.NRGBA {0, 0, 0, 255})
 			}
 		}
 	}
