@@ -6,20 +6,14 @@ import(
 	"image/draw"
 )
 
-type Fiber struct {
-	Original, Segmented image.Image
-}
-
-func (self *Fiber) Segment(src image.Image, high float64, low uint8) image.Image {
-
-	self.Original = src
+func Segment(src image.Image, high float64, low uint8) image.Image {
 
 	// create new image with same size
-	bounds := self.Original.Bounds()
+	bounds := src.Bounds()
 	m := image.NewRGBA(bounds)
 
 	// copy content to new image
-	draw.Draw(m, bounds, self.Original, bounds.Min, draw.Src)
+	draw.Draw(m, bounds, src, bounds.Min, draw.Src)
 
 	height := m.Bounds().Max.Y
 	width := m.Bounds().Max.X
@@ -34,7 +28,5 @@ func (self *Fiber) Segment(src image.Image, high float64, low uint8) image.Image
 		}
 	}
 
-	self.Segmented = m
-
-	return self.Segmented
+	return m
 }

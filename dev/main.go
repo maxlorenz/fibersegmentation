@@ -22,8 +22,7 @@ func main() {
 		log.Fatal("Konnte Bild nicht umwandeln")
 	}
 	
-	test := new (segment.Fiber)
-	result := test.Segment(src, 1.4, 120)
+	result := segment.Segment(src, 1.4, 120)
 
 	if err = png.Encode(destF, result); err != nil {
 		log.Fatal("Konnte Bild nicht speichern")
