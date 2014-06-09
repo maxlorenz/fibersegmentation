@@ -2,6 +2,7 @@ package main
 
 import (
 	"../src/segment"
+	"../src/view"
 	"image"
 	"image/png"
 	"log"
@@ -9,6 +10,8 @@ import (
 )
 
 func main() {
+
+	view.Run()
 
 	srcF, err := os.Open("thresh.png")
 	destF, err := os.OpenFile("out.png", os.O_CREATE | os.O_WRONLY, 0666)
