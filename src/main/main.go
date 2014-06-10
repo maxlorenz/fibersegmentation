@@ -10,7 +10,7 @@ import (
 
 func main() {
 
-	srcF, err := os.Open("thresh.png")
+	srcF, err := os.Open("../thresh.png")
 	destF, err := os.OpenFile("out.png", os.O_CREATE|os.O_WRONLY, 0666)
 
 	if err != nil {
