@@ -1,6 +1,6 @@
 package segment
 
-import(
+import (
 	"image"
 	"image/color"
 	"image/draw"
@@ -17,13 +17,13 @@ func Segment(src image.Image, high float64, low uint8) image.Image {
 
 	height := m.Bounds().Max.Y
 	width := m.Bounds().Max.X
-	
+
 	// test each pixel
 	for y := 0; y < height; y++ {
 		for x := 0; x < width; x++ {
 			r, g, _, _ := m.At(x, y).RGBA()
 			if (uint8(r) <= low) || (float64(r)/float64(g) <= high) {
-				m.Set(x, y, color.NRGBA {0, 0, 0, 255})
+				m.Set(x, y, color.NRGBA{0, 0, 0, 255})
 			}
 		}
 	}
