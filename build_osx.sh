@@ -1,7 +1,7 @@
 export GOPATH=$(pwd -P)
-cd bin/OSX
+cd bin
 clear
-echo building...
-go build main
-echo done.
-read -p
+echo Building...
+go build -o fibersegmentation_osx main
+echo Done. Press any key to continue.
+read
