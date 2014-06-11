@@ -3,6 +3,7 @@ package main
 import (
 	"../src/segment"
 	// "../src/view"
+	"../src/graph"
 	"image"
 	"image/png"
 	"os"

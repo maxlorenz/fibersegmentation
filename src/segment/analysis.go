@@ -3,6 +3,7 @@ package segment
 import(
 	"image"
 	"fmt"
+	"../graph"
 )
 
 type Pixel struct {
@@ -39,10 +40,10 @@ func ReadToMemory(src image.Image, high float64, low uint8) ImageAnalytics {
 	return *analytics
 }
 
-// Needs to be rewritten as Pixels come unordered and form new Fibers too often!
-// Arrays are segmented because of that mechanism
+// Todo: integrate into ReadToMemory, because pixels are sorted. Use union/find
 func (self *ImageAnalytics) SeparateFibers() []Fiber {
 	result := []Fiber {Fiber {}}
+	table := []graph.Element {}
 
 	for i := range self.Fibers {
 		
