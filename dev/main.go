@@ -3,7 +3,7 @@ package main
 import (
 	"../src/segment"
 	// "../src/view"
-	"../src/graph"
+	// "../src/graph"
 	"image"
 	"image/png"
 	"os"
@@ -44,6 +44,7 @@ func main() {
 	go func() {
 		analytics := segment.ReadToMemory(src, 1.4, 120)
 		print(len(analytics.Fibers), " zu ", src.Bounds().Max.X * src.Bounds().Max.Y, " Pixel.\n")
+		print(len(analytics.Table))
 
 		wg.Done()
 	}()

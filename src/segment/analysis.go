@@ -2,8 +2,8 @@ package segment
 
 import(
 	"image"
-	"fmt"
-	"../graph"
+	// "fmt"
+	// "../graph"
 )
 
 type Pixel struct {
@@ -16,6 +16,7 @@ type Fiber struct {
 
 type ImageAnalytics struct {
 	Fibers []Pixel
+	Table []Fiber
 }
 
 
@@ -23,6 +24,8 @@ type ImageAnalytics struct {
 func ReadToMemory(src image.Image, high float64, low uint8) ImageAnalytics {
 
 	analytics := new (ImageAnalytics)
+
+	table := make([]Fiber, 0)
 
 	height := src.Bounds().Max.Y
 	width := src.Bounds().Max.X
@@ -32,38 +35,26 @@ func ReadToMemory(src image.Image, high float64, low uint8) ImageAnalytics {
 		for x := 0; x < width; x++ {
 			r, g, _, _ := src.At(x, y).RGBA()
 			if (uint8(r) > low) && (float64(r)/float64(g) > high) {
-				analytics.Fibers = append(analytics.Fibers, Pixel {x, y})
+
+				pixel := Pixel {x, y}
+				found := false
+
+				for i := range table {
+					if pixel.BelongsTo(table[i]) {
+						table[i] = Fiber {append(table[i].Pixels[:], pixel)}
+						found = true
+					}
+				}
+				if found == false {
+					table = append(table, Fiber {[]Pixel {pixel}})
+				}
+
 			}
 		}
 	}
 
+	analytics.Table = table
 	return *analytics
-}
-
-// Todo: integrate into ReadToMemory, because pixels are sorted. Use union/find
-func (self *ImageAnalytics) SeparateFibers() []Fiber {
-	result := []Fiber {Fiber {}}
-	table := []graph.Element {}
-
-	for i := range self.Fibers {
-		
-		currentPixel := self.Fibers[i]
-		pixelBelongsToFiber := false
-
-		for j := range result {
-			if currentPixel.BelongsTo(result[j]) {
-				result[j].Pixels = append(result[j].Pixels, currentPixel)
-				pixelBelongsToFiber = true
-			}
-		}
-
-		if !pixelBelongsToFiber {
-			fmt.Println("%v", result)
-			result = append(result, Fiber {[]Pixel {currentPixel}})
-		}
-	}
-
-	return result
 }
 
 func (self *Pixel) BelongsTo(fiber Fiber) bool {
