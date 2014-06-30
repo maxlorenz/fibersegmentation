@@ -1,9 +1,7 @@
 package main
 
 import (
-	"../src/segment"
-	// "../src/view"
-	// "../src/graph"
+	"./fibersegmentation"
 	"image"
 	"image/png"
 	"os"
@@ -12,10 +10,7 @@ import (
 
 func main() {
 
-	// view.Run()
-	// Don't start the web UI during development as it's not needed.
-
-	srcF, err := os.Open("thresh.png")
+	srcF, err := os.Open("./img/thresh.png")
 	if err != nil {
 		panic("Bild nicht gefunden")
 	}
@@ -33,7 +28,7 @@ func main() {
 
 	// convert image, write to disk
 	go func() {
-		result := segment.Segment(src, 1.4, 120)
+		result := fibersegmentation.Segment(src, 1.4, 120)
 		if err = png.Encode(destF, result); err != nil {
 			panic("Konnte Bild niccht speichern")
 		}
@@ -43,10 +38,8 @@ func main() {
 		wg.Done()
 	}()
 
-	// print(len(analytics.SeparateFibers())) TODO: Rewrite function, contains errors. See analysis.go for details
-
 	go func() {
-		analytics := segment.ReadToMemory(src, 1.4, 120)
+		analytics := fibersegmentation.ReadToMemory(src, 1.4, 120)
 		print(len(analytics.Fibers), " zu ", src.Bounds().Max.X*src.Bounds().Max.Y, " Pixel.\n")
 		print(len(analytics.Table))
 

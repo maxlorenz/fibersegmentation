@@ -1,9 +1,7 @@
-package segment
+package fibersegmentation
 
 import(
 	"image"
-	// "fmt"
-	// "../graph"
 )
 
 type Pixel struct {
