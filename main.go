@@ -30,7 +30,7 @@ func main() {
 	go func() {
 		result := fibersegmentation.Segment(src, 1.4, 120)
 		if err = png.Encode(destF, result); err != nil {
-			panic("Konnte Bild niccht speichern")
+			panic("Konnte Bild nicht speichern")
 		}
 
 		print("Bild gespeichert.\n")
@@ -39,9 +39,9 @@ func main() {
 	}()
 
 	go func() {
-		analytics := fibersegmentation.ReadToMemory(src, 1.4, 120)
-		print(len(analytics.Fibers), " zu ", src.Bounds().Max.X*src.Bounds().Max.Y, " Pixel.\n")
-		print(len(analytics.Table))
+		analytics := fibersegmentation.ConnectedComponents(src, 1.4, 120)
+
+		print(len(analytics), " Pixel analysiert.")
 
 		wg.Done()
 	}()

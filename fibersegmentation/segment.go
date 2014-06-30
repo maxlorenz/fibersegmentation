@@ -6,6 +6,14 @@ import (
 	"image/draw"
 )
 
+type Pixel struct {
+	X, Y int
+}
+
+type Fiber struct {
+	Pixels []Pixel
+}
+
 func Segment(src image.Image, high float64, low uint8) image.Image {
 
 	// create new image with same size
