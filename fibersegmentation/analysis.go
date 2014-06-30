@@ -4,6 +4,10 @@ import(
 	"image"
 )
 
+type Pixel struct {
+	X, Y int
+}
+
 func ConnectedComponents(src image.Image, high float64, low uint8) map[Pixel]int {
 
 	height := src.Bounds().Max.Y
