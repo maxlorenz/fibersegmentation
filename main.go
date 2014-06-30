@@ -39,9 +39,9 @@ func main() {
 	}()
 
 	go func() {
-		analytics := fibersegmentation.ConnectedComponents(src, 1.4, 120)
+		segmentedPixels := fibersegmentation.ConnectedComponents(src, 1.4, 120)
 
-		print(len(analytics), " Pixel analysiert.")
+		print(len(segmentedPixels), " gefundene Pixel analysiert.")
 
 		wg.Done()
 	}()
