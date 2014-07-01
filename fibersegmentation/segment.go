@@ -6,7 +6,7 @@ import (
 	"image/draw"
 )
 
-func Segment(src image.Image, high float64, low uint8) image.Image {
+func Segment(src image.Image, high float32, low uint8) image.Image {
 
 	// create new image with same size
 	bounds := src.Bounds()
@@ -22,7 +22,7 @@ func Segment(src image.Image, high float64, low uint8) image.Image {
 	for y := 0; y < height; y++ {
 		for x := 0; x < width; x++ {
 			r, g, _, _ := src.At(x, y).RGBA()
-			if (uint8(r) <= low) || (float64(r)/float64(g) <= high) {
+			if (uint8(r) <= low) || (float32(r)/float32(g) <= high) {
 				m.Set(x, y, color.NRGBA{0, 0, 0, 255})
 			}
 		}

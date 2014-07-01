@@ -2,50 +2,46 @@ package main
 
 import (
 	"./fibersegmentation"
-	"image"
-	"image/png"
-	"os"
 	"sync"
 )
 
 func main() {
 
-	srcF, err := os.Open("./img/thresh.png")
-	if err != nil {
-		panic("Bild nicht gefunden")
+	test := fibersegmentation.Project{
+		Src:  "./img/thresh.png",
+		Dest: "out.png",
+		Thresholds: fibersegmentation.ThresholdPair{
+			Low:  1.4,
+			High: 120,
+		},
 	}
 
-	destF, _ := os.OpenFile("out.png", os.O_CREATE|os.O_WRONLY, 0666)
+	test.Init()
 
-	src, _, err := image.Decode(srcF)
-	if err != nil {
-		panic("Konnte Bild nicht umwandeln")
-	}
-
-	// Let mainthread wait to finish threads
-	wg := sync.WaitGroup{}
-	wg.Add(2)
+	waitGroup := sync.WaitGroup{}
+	waitGroup.Add(2)
 
 	// convert image, write to disk
 	go func() {
-		result := fibersegmentation.Segment(src, 1.4, 120)
-		if err = png.Encode(destF, result); err != nil {
-			panic("Konnte Bild nicht speichern")
-		}
+		test.SaveSegmentedImage();
 
 		print("Bild gespeichert.\n")
-
-		wg.Done()
+		waitGroup.Done()
 	}()
 
+	// analyze fibers etc.
 	go func() {
-		segmentedPixels := fibersegmentation.ConnectedComponents(src, 1.4, 120)
+		print("Analysiere Fasern...\n")
+		fibers := test.ConnectedComponents()
 
-		print(len(segmentedPixels), " gefundene Pixel analysiert.")
+		for _, fiber := range fibers {
+			print("Fläche: ", len(fiber), "\n")
+		}
 
-		wg.Done()
+		waitGroup.Done()
 	}()
 
-	wg.Wait()
+	// Let mainthread wait for all threads
+	waitGroup.Wait()
 
 }
