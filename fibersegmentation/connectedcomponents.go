@@ -51,7 +51,7 @@ func (self Project) ConnectedComponents() [][]Pixel {
 						equivalentRegions[w] = parent
 					}
 
-					pixelMarks[Pixel{x, y}] = n
+					pixelMarks[Pixel{x, y}] = w
 				}
 
 			}
