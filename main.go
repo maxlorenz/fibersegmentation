@@ -26,20 +26,28 @@ func main() {
 	go func() {
 		test.SaveSegmentedImage()
 
-		print("Bild gespeichert.\n")
 		waitGroup.Done()
 	}()
 
 	// analyze fibers etc.
 	go func() {
-		print("Analysiere Fasern...\n")
 		fibers := test.ConnectedComponents()
 
-		for n, fiber := range fibers {
-			print("Fläche(", n, "): ", len(fiber), "\n")
-		}
+		sorted := fibersegmentation.SortFibers(fibers)
 
-		fmt.Printf("%v", fibersegmentation.SortFibers(fibers)[21:32])
+		fmt.Println("Nummer,Länge,Pixel,Krümmung")
+		for i, fiber := range sorted {
+			l := fibersegmentation.FiberLength(fiber)
+			a := len(fiber)
+			r := 0.0
+
+			if l == 0 {
+				r = 0.0
+			} else {
+				r = float64(a)/l
+			}
+			fmt.Printf("%v,%f,%v,%v\n", i, l, a, r)
+		}
 
 		waitGroup.Done()
 	}()
