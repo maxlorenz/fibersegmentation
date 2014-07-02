@@ -44,7 +44,7 @@ func main() {
 			if l == 0 {
 				r = 0.0
 			} else {
-				r = float64(a)/l
+				r = float64(a) / l
 			}
 			fmt.Printf("%v,%f,%v,%v\n", i, l, a, r)
 		}
