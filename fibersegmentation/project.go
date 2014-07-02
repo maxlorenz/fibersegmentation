@@ -18,7 +18,7 @@ type ThresholdPair struct {
 }
 
 func (self *Project) Init() {
-	
+
 	srcF, err := os.Open(self.Src)
 
 	if err != nil {
@@ -32,7 +32,7 @@ func (self *Project) Init() {
 	}
 }
 
-func (self *Project) SaveSegmentedImage() {
+func (self Project) SaveSegmentedImage() {
 
 	destF, _ := os.OpenFile(self.Dest, os.O_CREATE|os.O_WRONLY, 0666)
 	result := Segment(self.Image, self.Thresholds.Low, self.Thresholds.High)

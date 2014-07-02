@@ -2,6 +2,7 @@ package main
 
 import (
 	"./fibersegmentation"
+	"fmt"
 	"sync"
 )
 
@@ -23,7 +24,7 @@ func main() {
 
 	// convert image, write to disk
 	go func() {
-		test.SaveSegmentedImage();
+		test.SaveSegmentedImage()
 
 		print("Bild gespeichert.\n")
 		waitGroup.Done()
@@ -34,9 +35,11 @@ func main() {
 		print("Analysiere Fasern...\n")
 		fibers := test.ConnectedComponents()
 
-		for _, fiber := range fibers {
-			print("Fläche: ", len(fiber), "\n")
+		for n, fiber := range fibers {
+			print("Fläche(", n, "): ", len(fiber), "\n")
 		}
+
+		fmt.Printf("%v", fibersegmentation.SortFibers(fibers)[21:32])
 
 		waitGroup.Done()
 	}()

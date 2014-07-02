@@ -4,7 +4,7 @@ type Pixel struct {
 	X, Y int
 }
 
-func (self *Project) ConnectedComponents() [][]Pixel {
+func (self Project) ConnectedComponents() [][]Pixel {
 
 	height := self.Image.Bounds().Max.Y
 	width := self.Image.Bounds().Max.X
